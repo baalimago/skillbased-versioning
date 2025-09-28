@@ -1,0 +1,561 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Skill Based Versioning 1.0.0</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Skill Based Versioning (SBVer) 1.0.0 — A superset of Semantic Versioning 2.0.0 introducing a Perfection Sentinel at 1.3.37 and DISHONORABLE postsentinel releases."
+    />
+    <style>
+      :root {
+        --text: #222;
+        --muted: #555;
+        --link: #2e6db4;
+        --border: #e5e5e5;
+        --bg: #fff;
+        --pre: #f7f7f7;
+      }
+      html,
+      body {
+        padding: 0;
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+      }
+      body {
+        font:
+          16px/1.6 -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          Helvetica,
+          Arial,
+          sans-serif,
+          "Apple Color Emoji",
+          "Segoe UI Emoji";
+      }
+      .container {
+        max-width: 920px;
+        margin: 0 auto;
+        padding: 24px 16px 80px;
+      }
+      header h1 {
+        font-size: 2.2rem;
+        margin: 0 0 0.25rem;
+      }
+      header p.kicker {
+        margin: 0;
+        color: var(--muted);
+      }
+      nav.toc {
+        margin: 1rem 0 2rem;
+        border-top: 1px solid var(--border);
+        border-bottom: 1px solid var(--border);
+        padding: 0.5rem 0;
+      }
+      nav.toc a {
+        margin-right: 1rem;
+        color: var(--link);
+        text-decoration: none;
+      }
+      h2 {
+        margin-top: 2rem;
+      }
+      h3 {
+        margin-top: 1.25rem;
+      }
+      code,
+      kbd {
+        background: #f2f4f7;
+        border-radius: 4px;
+        padding: 0 4px;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+          monospace;
+      }
+      pre {
+        background: var(--pre);
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        padding: 12px;
+        overflow: auto;
+      }
+      ul,
+      ol {
+        padding-left: 1.25rem;
+      }
+      .note {
+        background: #fffbe6;
+        border: 1px solid #f1e7a3;
+        border-radius: 6px;
+        padding: 0.75rem 1rem;
+      }
+      footer {
+        margin-top: 3rem;
+        font-size: 0.95rem;
+        color: var(--muted);
+      }
+      a {
+        color: var(--link);
+      }
+      .badgebar {
+        margin: 0.75rem 0 1.25rem;
+      }
+      .badge {
+        display: inline-block;
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        padding: 2px 10px;
+        font-size: 0.9rem;
+        margin-right: 6px;
+        color: var(--muted);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>Skill Based Versioning 1.0.0</h1>
+        <p class="kicker">A superset of Semantic Versioning 2.0.0</p>
+        <div class="badgebar">
+          <span class="badge">1.0.0</span>
+        </div>
+      </header>
+
+      <nav class="toc" aria-label="Table of contents">
+        <a href="#summary">Summary</a>
+        <a href="#introduction">Introduction</a>
+        <a href="#key-words">Key words</a>
+        <a href="#specification">Specification</a>
+        <a href="#examples">Examples</a>
+        <a href="#faq">FAQ</a>
+        <a href="#license">License</a>
+      </nav>
+
+      <section id="summary">
+        <h2>Summary</h2>
+        <p>
+          Given a version number <code>MAJOR.MINOR.PATCH</code>, and building on
+          all rules of Semantic Versioning (SemVer) 2.0.0:
+        </p>
+        <ul>
+          <li>
+            <strong>MAJOR</strong> version MUST be incremented for incompatible
+            API changes.
+          </li>
+          <li>
+            <strong>MINOR</strong> version MUST be incremented for backward
+            compatible functionality.
+          </li>
+          <li>
+            <strong>PATCH</strong> version MUST be incremented for backward
+            compatible bug fixes.
+          </li>
+        </ul>
+        <p>
+          Skill Based Versioning (SBVer) introduces a
+          <strong>Perfection Sentinel</strong> at <code>1.3.37</code>. Once a
+          project reaches <code>1.3.37</code>, the version SHOULD be considered
+          final. Any release after <code>1.3.37</code> is
+          <strong>DISHONORABLE</strong> and MUST encode the number of
+          postsentinel releases:
+        </p>
+        <ul>
+          <li>
+            <strong>Post-sentinel hotfix (PATCH)</strong>: insert an additional
+            <code>3</code> immediately before the trailing <code>7</code> in
+            <em>PATCH</em>. Examples: <code>1.3.337</code>,
+            <code>1.3.3337</code>, …
+          </li>
+          <li>
+            <strong>Post-sentinel MINOR</strong>: append an additional trailing
+            <code>3</code> to <em>MINOR</em> and set <em>PATCH</em> to
+            <code>7</code>. Examples: <code>1.33.7</code>, <code>1.333.7</code>,
+            …
+          </li>
+        </ul>
+        <div class="note">
+          Note: There MAY be cases where patches are made after
+          <code>1.3.37</code>, but such releases MUST be noted as
+          <strong>DISHONORABLE</strong>.
+        </div>
+      </section>
+
+      <section id="introduction">
+        <h2>Introduction</h2>
+        <p>
+          SBVer addresses the pressure to keep iterating after a project reaches
+          its projected perfection point. It preserves full SemVer compatibility
+          while adding a clear, auditable signal for postsentinel releases. By
+          standardizing these signals, consumers can reason about stability
+          while maintainers communicate how often the project has surpassed its
+          “final” state at <code>1.3.37</code>.
+        </p>
+      </section>
+
+      <section id="key-words">
+        <h2>Key words</h2>
+        <p>
+          The key words “MUST”, “MUST NOT”, “REQUIRED”, “SHALL”, “SHALL NOT”,
+          “SHOULD”, “SHOULD NOT”, “RECOMMENDED”, “MAY”, and “OPTIONAL” in this
+          document are to be interpreted as described in
+          <a
+            href="https://www.rfc-editor.org/rfc/rfc2119"
+            rel="noopener"
+            target="_blank"
+            >RFC 2119</a
+          >.
+        </p>
+        <p>This document also uses the word <strong>“DISHONORABLE”</strong>:</p>
+        <ul>
+          <li>
+            <strong>DISHONORABLE</strong>: A classification applied to any
+            release made after the Perfection Sentinel (<code>1.3.37</code>).
+            DISHONORABLE releases are permitted but discouraged; they MUST be
+            encoded in the version number as specified, and SHOULD be minimized
+            in order to avoid Shame, see §10.
+          </li>
+        </ul>
+      </section>
+
+      <section id="specification">
+        <h2>Skill Based Versioning Specification (SBVer)</h2>
+
+        <h3>1. Baseline</h3>
+        <ul>
+          <li>
+            Software using SBVer MUST declare a public API and otherwise comply
+            with <a href="https://semver.org/">SemVer 2.0.0</a>. All SemVer
+            rules apply unless explicitly superseded below.
+          </li>
+        </ul>
+
+        <h3>2. Normal version format</h3>
+        <ul>
+          <li>
+            A version number MUST take the form <code>X.Y.Z</code> where
+            <code>X</code>, <code>Y</code>, and <code>Z</code> are non-negative
+            integers with no leading zeroes. Each element MUST increase
+            numerically.
+          </li>
+        </ul>
+
+        <h3>3. Immutability</h3>
+        <ul>
+          <li>
+            Once a versioned release is published, its contents MUST NOT be
+            modified. Any modifications MUST be released as a new version.
+          </li>
+        </ul>
+
+        <h3>4. Perfection Sentinel</h3>
+        <ul>
+          <li>
+            The Perfection Sentinel is the normal version <code>1.3.37</code>.
+          </li>
+          <li>
+            Upon reaching <code>1.3.37</code>, the project SHOULD be considered
+            final. No further releases SHOULD be necessary.
+          </li>
+          <li>
+            Any release after <code>1.3.37</code> MUST be noted as
+            <strong>DISHONORABLE</strong> and MUST use the encoding rules below.
+          </li>
+        </ul>
+
+        <h3>5. Post-sentinel encoding rules (DISHONORABLE releases)</h3>
+        <ol>
+          <li>
+            <strong>Post-sentinel PATCH (hotfix)</strong>
+            <ul>
+              <li>
+                The <em>PATCH</em> field MUST be formed by inserting one
+                additional <code>3</code> immediately before the trailing
+                <code>7</code> for each additional hotfix after
+                <code>1.3.37</code>.
+              </li>
+              <li>
+                Sequence (PATCH): <code>37</code> (sentinel baseline) →
+                <code>337</code> → <code>3337</code> → <code>33337</code> → …
+              </li>
+              <li>Examples: <code>1.3.337</code>, <code>1.3.3337</code>.</li>
+            </ul>
+          </li>
+          <li>
+            <strong>Post-sentinel MINOR</strong>
+            <ul>
+              <li>
+                The <em>MINOR</em> field MUST append one additional trailing
+                <code>3</code> for each postsentinel MINOR release.
+              </li>
+              <li>
+                Upon a postsentinel MINOR, <em>PATCH</em> MUST be set to
+                <code>7</code>.
+              </li>
+              <li>
+                Sequence (MINOR): <code>3</code> (sentinel baseline) →
+                <code>33</code> → <code>333</code> → <code>3333</code> → …
+              </li>
+              <li>Examples: <code>1.33.7</code>, <code>1.333.7</code>.</li>
+            </ul>
+          </li>
+          <li>
+            <strong>Post-sentinel MAJOR</strong>
+            <ul>
+              <li>
+                After <code>1.3.37</code>, MAJOR version increments MUST NOT
+                occur. If a breaking change is unavoidable, the project SHOULD
+                fork under a new name or major line. If the original line must
+                continue, the change MUST be released as a DISHONORABLE MINOR
+                with appropriate deprecation and migration guidance.
+              </li>
+            </ul>
+          </li>
+        </ol>
+
+        <h3>6. Counting DISHONORABLE releases</h3>
+        <ul>
+          <li>
+            The number of postsentinel hotfixes is the count of additional
+            <code>3</code> digits inserted before the terminal <code>7</code> in
+            <em>PATCH</em> relative to <code>37</code>. Example:
+            <code>1.3.3337</code> indicates three DISHONORABLE hotfixes after
+            <code>1.3.37</code>.
+          </li>
+          <li>
+            The number of postsentinel MINOR releases is the count of trailing
+            <code>3</code> digits in <em>MINOR</em> minus one (since
+            <code>3</code> is the sentinel baseline). Example:
+            <code>1.333.7</code> indicates two DISHONORABLE MINOR releases after
+            <code>1.3.37</code>.
+          </li>
+          <li>
+            A tooling “dishonor score” MAY be reported as the sum of the two
+            counts above.
+          </li>
+        </ul>
+
+        <h3>7. Pre-release and build metadata</h3>
+        <ul>
+          <li>
+            Pre-release and build metadata follow SemVer unchanged and MAY be
+            used with SBVer, including postsentinel versions. Examples:
+            <code>1.3.337-rc.1</code>, <code>1.33.7+exp.sha.5114f85</code>.
+          </li>
+        </ul>
+
+        <h3>8. Precedence</h3>
+        <ul>
+          <li>
+            Version precedence MUST be computed exactly as in SemVer: compare
+            <em>MAJOR</em>, then <em>MINOR</em>, then
+            <em>PATCH</em> numerically; pre-release has lower precedence than
+            the associated normal version; build metadata is ignored in
+            precedence.
+          </li>
+          <li>
+            The DISHONORABLE encodings remain valid integers, so no special
+            comparator is required. Example:
+            <code>1.3.37 &lt; 1.3.337 &lt; 1.3.3337</code> and
+            <code>1.3.37 &lt; 1.33.7</code>.
+          </li>
+        </ul>
+
+        <h3>9. Validity constraints</h3>
+        <ul>
+          <li>
+            Before reaching <code>1.3.37</code>, versioning is purely SemVer.
+          </li>
+          <li>
+            At or beyond <code>1.3.37</code>:
+            <ul>
+              <li>
+                A postsentinel <em>PATCH</em> MUST be of the numeric form
+                <code>37</code>, <code>337</code>, <code>3337</code>, … (i.e.,
+                one or more <code>3</code> digits followed by a single
+                <code>7</code>). When a postsentinel MINOR occurs,
+                <em>PATCH</em> MUST be set to <code>7</code> and then follow the
+                PATCH rule thereafter for subsequent hotfixes.
+              </li>
+              <li>
+                A postsentinel <em>MINOR</em> MUST be of the numeric form
+                <code>3</code>, <code>33</code>, <code>333</code>, … After a
+                postsentinel hotfix, <em>MINOR</em> MUST remain unchanged.
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <h3 id="shame">10. Shame (reviewer metric)</h3>
+        <ul>
+          <li>
+            Shame is a reviewer-facing metric that quantifies how far a project
+            has moved beyond the Perfection Sentinel. It MUST NOT alter version
+            semantics and MUST be derived solely from DISHONORABLE encodings.
+          </li>
+          <li>
+            Inputs (see §6):
+            <ul>
+              <li>
+                H = number of postsentinel hotfixes (count of extra
+                <code>3</code>s before the terminal <code>7</code> in
+                <em>PATCH</em>).
+              </li>
+              <li>
+                M = number of postsentinel MINOR releases (count of trailing
+                <code>3</code>s in <em>MINOR</em> minus one).
+              </li>
+            </ul>
+          </li>
+          <li>
+            Default weights: to reflect that MINOR is a greater transgression
+            than PATCH, tools SHOULD use
+            <code>w_patch = 1</code> and <code>w_minor = 3</code>.
+          </li>
+          <li>
+            Shame score: <code>S = (H * w_patch) + (M * w_minor)</code>. The
+            simple “dishonor score” in §6 MAY continue to be reported as
+            <code>H + M</code>, but reviewer enforcement SHOULD use
+            <code>S</code>.
+          </li>
+          <li>
+            Classification (RECOMMENDED bands):
+            <ul>
+              <li><strong>S = 0</strong>: At Sentinel (no shame).</li>
+              <li>
+                <strong>1 ≤ S ≤ 2</strong>: Minor shame (document rationale).
+              </li>
+              <li>
+                <strong>3 ≤ S ≤ 6</strong>: Significant shame (lead maintainer
+                sign-off SHOULD be required).
+              </li>
+              <li>
+                <strong>S ≥ 7</strong>: Grave shame (project SHOULD plan a
+                fork/new line or consider resignation).
+              </li>
+            </ul>
+          </li>
+          <li>
+            Reviewer requirements:
+            <ul>
+              <li>
+                Any increase in <code>S</code> MUST include a “Dishonor
+                rationale” in release notes.
+              </li>
+              <li>
+                Any postsentinel MINOR (<code>M</code> increases) MUST include
+                deprecation/migration guidance.
+              </li>
+              <li>
+                Automated checks MAY block merges when crossing classification
+                bands.
+              </li>
+              <li>
+                MAJOR after the Sentinel remains disallowed; attempts MUST be
+                rejected (see §5.3).
+              </li>
+            </ul>
+          </li>
+          <li>
+            Display guidance: tools MAY show
+            <code>Shame: S (H hotfix, M minor)</code> as a badge or in release
+            notes. Shame resets to <code>0</code> only when a new major line or
+            fork establishes its own path to <code>1.3.37</code>.
+          </li>
+          <li>
+            Examples:
+            <ul>
+              <li><code>1.3.3337</code> → H=3, M=0 → <code>S = 3</code>.</li>
+              <li><code>1.333.7</code> → H=0, M=2 → <code>S = 6</code>.</li>
+              <li><code>1.33.337</code> → H=2, M=1 → <code>S = 5</code>.</li>
+            </ul>
+          </li>
+        </ul>
+      </section>
+
+      <section id="examples">
+        <h2>Examples</h2>
+        <h3>Approaching perfection</h3>
+        <ul>
+          <li>
+            <code>1.3.36</code> → <code>1.3.37</code> (Perfection Sentinel
+            reached; final recommended)
+          </li>
+        </ul>
+        <h3>Postsentinel hotfixes (DISHONORABLE)</h3>
+        <ul>
+          <li>
+            <code>1.3.37</code> → <code>1.3.337</code> → <code>1.3.3337</code>
+          </li>
+        </ul>
+        <h3>Postsentinel MINOR additions (more DISHONORABLE)</h3>
+        <ul>
+          <li>
+            <code>1.3.37</code> → <code>1.33.7</code> → <code>1.333.7</code>
+          </li>
+        </ul>
+        <h3>Mixed sequence</h3>
+        <ul>
+          <li>
+            <code>1.3.37</code> → <code>1.33.7</code> → <code>1.33.337</code> →
+            <code>1.333.7</code> → <code>1.333.337</code>
+          </li>
+        </ul>
+        <h3>Pre-release/build</h3>
+        <ul>
+          <li><code>1.3.337-rc.1</code>, <code>1.333.7+build.42</code></li>
+        </ul>
+
+        <h3>Suggested regular expressions (illustrative)</h3>
+        <ul>
+          <li>Postsentinel hotfix pattern for PATCH: <code>^3+7$</code></li>
+          <li>Postsentinel minor pattern for MINOR: <code>^3+$</code></li>
+        </ul>
+      </section>
+
+      <section id="faq">
+        <h2>FAQ</h2>
+        <h3>Can we keep developing after <code>1.3.37</code>?</h3>
+        <p>
+          You MAY, but all such releases are <strong>DISHONORABLE</strong> and
+          MUST follow the encoding rules. You SHOULD minimize them.
+        </p>
+        <h3>Why not just bump MAJOR after <code>1.3.37</code>?</h3>
+        <p>
+          SBVer treats <code>1.3.37</code> as final; MAJOR increments after this
+          point violate that finality and are disallowed. Fork instead or use
+          DISHONORABLE MINOR with deprecations.
+        </p>
+        <h3>Do pre-release and build tags change any SBVer meaning?</h3>
+        <p>
+          No. They behave as in SemVer and do not affect the dishonor count.
+        </p>
+        <h3>Is SBVer compatible with SemVer tooling?</h3>
+        <p>
+          Yes. All versions remain <code>MAJOR.MINOR.PATCH</code> with numeric
+          fields and follow SemVer precedence. Existing SemVer tooling will
+          parse and compare correctly.
+        </p>
+      </section>
+
+      <section id="license">
+        <h2>License</h2>
+        <p>
+          This suggestion is intended to be used alongside the Semantic
+          Versioning specification (<a
+            href="https://creativecommons.org/licenses/by/3.0/"
+            target="_blank"
+            rel="noopener"
+            >CC BY 3.0</a
+          >).
+        </p>
+        <footer>
+          <p>
+            Skill Based Versioning is a proposal that maintains the
+            <em>look and feel</em> of the Semantic Versioning site for
+            familiarity; it is not affiliated with semver.org.
+          </p>
+        </footer>
+      </section>
+    </div>
+  </body>
+</html>
